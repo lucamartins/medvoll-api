@@ -23,4 +23,14 @@ public class Address {
     private String state;
 
     private String zipCode;
+
+    public Address(RegisterAddressDTO registerAddressDTO) {
+        this.street = registerAddressDTO.street();
+        this.number = registerAddressDTO.number();
+        this.complement = registerAddressDTO.complement();
+        this.neighborhood = registerAddressDTO.neighborhood();
+        this.city = registerAddressDTO.city();
+        this.state = registerAddressDTO.state();
+        this.zipCode = registerAddressDTO.zipCode();
+    }
 }
