@@ -73,4 +73,17 @@ public class DoctorController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DoctorDetailsDTO> getDoctorDetails(@PathVariable Long id) {
+        var doctor = doctorRepository.findById(id);
+
+        if (doctor.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var doctorDetails = new DoctorDetailsDTO(doctor.get());
+
+        return ResponseEntity.ok(doctorDetails);
+    }
 }
