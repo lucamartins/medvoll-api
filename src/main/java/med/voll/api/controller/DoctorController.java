@@ -24,8 +24,7 @@ public class DoctorController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<DoctorDetailsDTO> registerDoctor(@RequestBody @Valid RegisterDoctorDTO registerDoctorDTO,
-                                                           UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<DoctorDetailsDTO> registerDoctor(@RequestBody @Valid RegisterDoctorDTO registerDoctorDTO, UriComponentsBuilder uriComponentsBuilder) {
         var newDoctor = new Doctor(registerDoctorDTO);
 
         doctorRepository.save(newDoctor);
@@ -37,8 +36,7 @@ public class DoctorController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DoctorListItemDTO>> getDoctors(@PageableDefault(sort = "name", direction =
-            Sort.Direction.ASC) Pageable paginationConfig) {
+    public ResponseEntity<Page<DoctorListItemDTO>> getDoctors(@PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable paginationConfig) {
         var doctorsPage = doctorRepository.findAllByActiveTrue(paginationConfig).map(DoctorListItemDTO::new);
 
         return ResponseEntity.ok(doctorsPage);
@@ -46,8 +44,7 @@ public class DoctorController {
 
     @PatchMapping("/{id}")
     @Transactional
-    public ResponseEntity<DoctorDetailsDTO> updateDoctor(@PathVariable Long id,
-                                                         @RequestBody @Valid UpdateDoctorDTO updateDoctorDTO) {
+    public ResponseEntity<DoctorDetailsDTO> updateDoctor(@PathVariable Long id, @RequestBody @Valid UpdateDoctorDTO updateDoctorDTO) {
         var doctor = doctorRepository.findById(id);
 
         if (doctor.isEmpty()) {
