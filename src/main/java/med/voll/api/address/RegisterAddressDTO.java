@@ -1,5 +1,18 @@
 package med.voll.api.address;
 
-public record RegisterAddressDTO(String street, String number, String complement, String neighborhood, String city, String state, String zipCode) {
+import jakarta.validation.constraints.NotBlank;
 
-}
+public record RegisterAddressDTO(
+        @NotBlank
+        String street,
+        String number,
+        String complement,
+        @NotBlank
+        String neighborhood,
+        @NotBlank
+        String city,
+        @NotBlank
+        String state,
+        @NotBlank
+        String zipCode
+) { }
