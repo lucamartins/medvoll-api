@@ -32,7 +32,10 @@ public class Doctor {
     @Embedded
     private Address address;
 
+    private Boolean active;
+
     public Doctor(RegisterDoctorDTO registerDoctorDTO) {
+        this.active = true;
         this.name = registerDoctorDTO.name();
         this.email = registerDoctorDTO.email();
         this.phone = registerDoctorDTO.phone();
@@ -53,5 +56,9 @@ public class Doctor {
         if (updateDoctorDTO.phone() != null) {
             this.phone = updateDoctorDTO.phone();
         }
+    }
+
+    public void virtualDeletion() {
+        this.active = false;
     }
 }

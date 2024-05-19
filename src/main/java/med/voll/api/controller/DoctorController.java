@@ -28,7 +28,7 @@ public class DoctorController {
 
     @GetMapping
     public Page<DoctorListItemDTO> getDoctors(@PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable paginationConfig) {
-        var doctors = doctorRepository.findAll(paginationConfig);
+        var doctors = doctorRepository.findAllByActiveTrue(paginationConfig);
 
         return doctors.map(DoctorListItemDTO::new);
     }
@@ -39,5 +39,13 @@ public class DoctorController {
         var doctor = doctorRepository.findById(id);
 
         doctor.ifPresent(value -> value.updateData(updateDoctorDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void deleteDoctor(@PathVariable Long id) {
+        var doctor = doctorRepository.findById(id);
+
+        doctor.ifPresent(Doctor::virtualDeletion);
     }
 }
