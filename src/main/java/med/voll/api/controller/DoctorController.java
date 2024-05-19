@@ -1,10 +1,7 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
-import med.voll.api.doctor.Doctor;
-import med.voll.api.doctor.DoctorListItemDTO;
-import med.voll.api.doctor.DoctorRepository;
-import med.voll.api.doctor.RegisterDoctorDTO;
+import med.voll.api.doctor.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,14 +22,22 @@ public class DoctorController {
 
     @PostMapping
     @Transactional
-    void registerDoctor(@RequestBody @Valid RegisterDoctorDTO registerDoctorDTO) {
+    public void registerDoctor(@RequestBody @Valid RegisterDoctorDTO registerDoctorDTO) {
         doctorRepository.save(new Doctor(registerDoctorDTO));
     }
 
     @GetMapping
-    Page<DoctorListItemDTO> getDoctors(@PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable paginationConfig) {
+    public Page<DoctorListItemDTO> getDoctors(@PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable paginationConfig) {
         var doctors = doctorRepository.findAll(paginationConfig);
 
         return doctors.map(DoctorListItemDTO::new);
+    }
+
+    @PatchMapping("/{id}")
+    @Transactional
+    public void updateDoctor(@PathVariable Long id, @RequestBody @Valid UpdateDoctorDTO updateDoctorDTO) {
+        var doctor = doctorRepository.findById(id);
+
+        doctor.ifPresent(value -> value.updateData(updateDoctorDTO));
     }
 }
