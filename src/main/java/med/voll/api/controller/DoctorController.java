@@ -33,7 +33,7 @@ public class DoctorController {
 
         return doctors
                 .stream()
-                .map(d -> new DoctorListItemDTO(d.getName(), d.getEmail(), d.getCrm(), d.getSpecialty()))
+                .map(DoctorListItemDTO::new)
                 .toList();
     }
 }
